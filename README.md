@@ -28,3 +28,16 @@ encodes values in json instead of binary.
 * `db.del()`
 * `db.batch()`
 * `db.createReadStream()`
+
+#### atomicity
+you want all transactions to succeed or all transations to fail
+Suppose a user has just signed up.
+We might to create a record for their information and a record for their login username and password. You don't want a user to be only partially created if it falls apart.
+
+batch solves this problem by letting you group actions.
+```js
+db.batch([
+  {"key": "foo", "value": "123"},
+  {"key": "bar", "value": "456"}
+], err => console.error(err))
+```
